@@ -1,15 +1,15 @@
 macroScript UE_FBX_Exporter category:"TS_Tools" tooltip:"Exports Objects to FBX for UE" buttonText:"UE FBX Export"
 (
-	/* 
-	Original author: 
-		Tom Shannon
-		www.TomShannon3D.com
-	
-	Exports models to FBX one at a time. 
-	Each FBX file will be named after the Max Scene name
-	The models can be oriented to 0,0,0 on export (Rather than having them all stacked in MAX)
-	You can export the position of the models to the clipboard for easy placing in UE by pasting the clipboard contents then replacing the placeholder objects in UE with the correct objects.
-	
+    /* 
+    Original author: 
+        Tom Shannon
+        www.TomShannon3D.com
+    
+    Exports models to FBX one at a time. 
+    Each FBX file will be named after the Max Scene name
+    The models can be oriented to 0,0,0 on export (Rather than having them all stacked in MAX)
+    You can export the position of the models to the clipboard for easy placing in UE by pasting the clipboard contents then replacing the placeholder objects in UE with the correct objects.
+    
     Version 1.0     2014-07-22    First version!
     Version 1.1     2014-09-07    Collision features and some useability fixes, renamed
                                   NEW: Allows users to explicitly set the export directory. This stays saved in the max file permanently and will be reloaded
