@@ -22,7 +22,7 @@ macroScript UE_FBX_Exporter category:"TS_Tools" tooltip:"Exports Objects to FBX 
                                   Fixed: Checks to see if export path is valid and asks user if they want to create the export path if it doesn't exist, rather than just making one
     Version 1.1.1   2014-09-16    Fixed: Exporting objects now names objects correctly (Thanks, Maico G.!)
     Version 1.2     2025-06-29    NEW: Confirmed UE5 compatibility
-                                  Fixed: Instead of crashing on illegal filename chars (\, /, :, *, ?, ", <, >, |), now sanitizes names
+                                  Fixed: Instead of crashing on illegal objectname chars (\, /, :, *, ?, ", <, >, |), now sanitizes names
                                   Fixed: UI: improved links readability if 3ds Max is in dark mode; added link to web archive (as Tom's site is no longer online); defaults checkbox; minor fixes
     */
 
@@ -76,22 +76,23 @@ End Map
 		group "Export Options"
 		(
 			checkbox UE_UseGrid "Use user grid? (Grid must be named \"UE_Grid\" to work.)" enabled:false checked:true
-			checkbox UE_MoveToOrigin "Move each object to 0,0,0" enabled:true checked:false
-			checkbox UE_IncludeCollision "Include UCX Collision Shells" across:2 checked:false
+			checkbox UE_MoveToOrigin "Move each object to 0,0,0" enabled:true checked:true
+			checkbox UE_IncludeCollision "Include UCX Collision Shells" across:2 checked:true
 			hyperlink hl2 "For More Information Click Here" address:"https://docs.unrealengine.com/latest/INT/Engine/Content/FBX/StaticMeshes/index.html#collision" color:(color 100 180 255) visitedColor:(color 100 180 255)
 
-			checkbox UE_Dialog "Show FBX Export Dialog (цill only be shown once per export)" checked:false 
+			checkbox UE_Dialog "Show FBX Export Dialog (will only be shown once per export)" checked:true 
 			label label1 "Export Path:" align:#left
-			edittext UE_ExportPath_Text readonly:true  width:350 align:#left across:3 
+			edittext UE_ExportPath_Text readonly:true  width:360 align:#left across:3 
 			button UE_SetExportPathButton "..."  height:17 width:17 offset:[174,0] tooltip:"Explicitly set the export path"
 			button UE_ClearExportPathButton "×"  height:17 width:17 offset:[60,0] tooltip:"Reset the export patht to be relative to this MAX scene file"
-			button OpenExportPathButton "Open Export Path in Explorer"
+			button OpenExportPathButton "Open Export Path in Explorer" width:200
 		)
 		
-		listbox UE_Listbox "Objects to be Exported:" readonly:true height:20
-		button doit "Export Selected Objects" width:220 height:50	
+		label UE_ObjectCount "Objects to Export: 0" align:#left
+		listbox UE_Listbox "Objects to be Exported:" readonly:true height:15
+		button doit "Export Selected Objects" width:200 height:50
 		
-		hyperlink hl1 "Help and Info" address:"https://https://omavel.in/all/ue-fbx-exporter/" align:#center color:(color 100 180 255) visitedColor:(color 100 180 255)
+		hyperlink hl1 "Help and Info" address:"https://omavel.in/all/ue-fbx-exporter/" align:#center color:(color 100 180 255) visitedColor:(color 100 180 255)
 		hyperlink hl3 "Original Site (Web Archive)" address:"https://web.archive.org/web/20220527144947/http://www.tomshannon3d.com/2014/07/tstools-first-release-ue4-mass-fbx.html" align:#center color:(color 100 180 255) visitedColor:(color 100 180 255)
 
 		local doGridTransform = false
@@ -169,7 +170,7 @@ End Map
 			else return false
 		)
 		
-		--sanitize filename by replacing illegal Windows filename characters with underscores
+		--sanitize filename by replacing illegal objectname characters with underscores
 		fn sanitizeFileName name =
 		(
 			local cleanName = name
@@ -178,9 +179,7 @@ End Map
 				cleanName = substituteString cleanName char "_"
 			return cleanName
 		)
-		
-			
-		
+
 		--global updateList
 		global updateList = fn updateList resetExportPath:false =
 		(
@@ -200,7 +199,6 @@ End Map
 			if $UE_Grid == undefined then
 			(
 				UE_UseGrid.checked = false
-				UE_UseGrid.enabled = false
 			)
 			else UE_UseGrid.enabled = true
 			
@@ -245,9 +243,13 @@ End Map
 				
 				if exportObjects.count == 0 then
 				(
+					UE_ObjectCount.text = "Objects to Export: 0"
 					UE_Listbox.items = #("No Valid Objects Selected! Only non-UCX geometry can be exported.")
 					return true
 				)
+				
+				-- Update object counter
+				UE_ObjectCount.text = "Objects to Export: " + (exportObjects.count as string)
 				
 				-- build the .fbx  list (THIS IS PURELY for display!)
 				for obj in exportObjects do
@@ -280,6 +282,7 @@ End Map
 			)-- END if selection.count != 0 then
 			else
 			(
+				UE_ObjectCount.text = "Objects to Export: 0 (Errors Present)"
 				append selnames ("There are errors; can't build the object list:" as string)
 				join selnames ErrorArray
 				UE_Listbox.items = selnames
@@ -510,5 +513,5 @@ End Map
 		) --end on doit pressed do
 		
 	) -- end rollout
-	createDialog UE_FBX_Export_Rollout width:420	
+	createDialog UE_FBX_Export_Rollout width:430 height:600	
 )
