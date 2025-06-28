@@ -12,17 +12,17 @@ macroScript UE_FBX_Exporter category:"TS_Tools" tooltip:"Exports Objects to FBX 
 	
     Version 1.0     2014-07-22    First version!
     Version 1.1     2014-09-07    Collision features and some useability fixes, renamed
-                                NEW: Allows users to explicitly set the export directory. This stays saved in the max file permanently and will be reloaded
-                                NEW: Users can reset the saved export path to use the default export path
-                                NEW: Exports UCX collision geometry! Just ensure your naming is correct, and the script will detect the appropriate UCX primitives for export. Note: they do NOT need to be selected or visible!
-                                Fixed: Export Window now identifies errors and offers some helpful tooltips
-                                Fixed: Export path textfield identifies when no export path is available
-                                Fixed: Interface updates when the max file is loaded, saved or reset, showing the correct paths, etc.
-                                Fixed: Disabled Geometry-specific export options when the object position is being exported (To help notify the user as to what mode they are in)
-                                Fixed: Checks to see if export path is valid and asks user if they want to create the export path if it doesn't exist, rather than just making one
+                                  NEW: Allows users to explicitly set the export directory. This stays saved in the max file permanently and will be reloaded
+                                  NEW: Users can reset the saved export path to use the default export path
+                                  NEW: Exports UCX collision geometry! Just ensure your naming is correct, and the script will detect the appropriate UCX primitives for export. Note: they do NOT need to be selected or visible!
+                                  Fixed: Export Window now identifies errors and offers some helpful tooltips
+                                  Fixed: Export path textfield identifies when no export path is available
+                                  Fixed: Interface updates when the max file is loaded, saved or reset, showing the correct paths, etc.
+                                  Fixed: Disabled Geometry-specific export options when the object position is being exported (To help notify the user as to what mode they are in)
+                                  Fixed: Checks to see if export path is valid and asks user if they want to create the export path if it doesn't exist, rather than just making one
     Version 1.1.1   2014-09-16    Fixed: Exporting objects now names objects correctly (Thanks, Maico G.!)
     Version 1.2     2025-06-29    NEW: Confirmed UE5 compatibility
-                                Fixed: Instead of crashing on illegal filename chars (\, /, :, *, ?, ", <, >, |), now sanitizes names
+                                  Fixed: Instead of crashing on illegal filename chars (\, /, :, *, ?, ", <, >, |), now sanitizes names
     */
 
 	try (destroyDialog UE_FBX_Export_Rollout) catch ()
