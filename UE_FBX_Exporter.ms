@@ -23,6 +23,7 @@ macroScript UE_FBX_Exporter category:"TS_Tools" tooltip:"Exports Objects to FBX 
     Version 1.1.1   2014-09-16    Fixed: Exporting objects now names objects correctly (Thanks, Maico G.!)
     Version 1.2     2025-06-29    NEW: Confirmed UE5 compatibility
                                   Fixed: Instead of crashing on illegal filename chars (\, /, :, *, ?, ", <, >, |), now sanitizes names
+                                  Fixed: UI: improved links readability if 3ds Max is in dark mode; added link to web archive (as Tom's site is no longer online); defaults checkbox; minor fixes
     */
 
 	try (destroyDialog UE_FBX_Export_Rollout) catch ()
@@ -75,24 +76,24 @@ End Map
 		group "Export Options"
 		(
 			checkbox UE_UseGrid "Use user grid? (Grid must be named \"UE_Grid\" to work.)" enabled:false checked:true
-			checkbox UE_MoveToOrigin "Move each object to 0,0,0?" enabled:true checked:true
-			checkbox UE_IncludeCollision "Include UCX Collision Shells?" across:2 checked:true
-			hyperlink hl2 "For More Information Click Here" address:"https://docs.unrealengine.com/latest/INT/Engine/Content/FBX/StaticMeshes/index.html#collision" color:(color 0 0 255) visitedColor:(color 0 0 255)
+			checkbox UE_MoveToOrigin "Move each object to 0,0,0" enabled:true checked:false
+			checkbox UE_IncludeCollision "Include UCX Collision Shells" across:2 checked:false
+			hyperlink hl2 "For More Information Click Here" address:"https://docs.unrealengine.com/latest/INT/Engine/Content/FBX/StaticMeshes/index.html#collision" color:(color 100 180 255) visitedColor:(color 100 180 255)
 
-				
-			checkbox UE_Dialog "Show FBX Export Dialog? (Will only be shown once per export)" checked:true 
+			checkbox UE_Dialog "Show FBX Export Dialog (цill only be shown once per export)" checked:false 
 			label label1 "Export Path:" align:#left
-			edittext UE_ExportPath_Text readonly:true  width:360 align:#left across:3 
+			edittext UE_ExportPath_Text readonly:true  width:350 align:#left across:3 
 			button UE_SetExportPathButton "..."  height:17 width:17 offset:[174,0] tooltip:"Explicitly set the export path"
-			button UE_ClearExportPathButton "X"  height:17 width:17 offset:[60,0] tooltip:"Reset the export patht to be relative to this MAX scene file"
+			button UE_ClearExportPathButton "×"  height:17 width:17 offset:[60,0] tooltip:"Reset the export patht to be relative to this MAX scene file"
 			button OpenExportPathButton "Open Export Path in Explorer"
 		)
 		
 		listbox UE_Listbox "Objects to be Exported:" readonly:true height:20
 		button doit "Export Selected Objects" width:220 height:50	
 		
-		hyperlink hl1 "Help and Info" address:"http://www.tomshannon3d.com/2014/07/tstools-first-release-ue4-mass-fbx.html" align:#center color:(color 0 0 255) visitedColor:(color 0 0 255)
-		
+		hyperlink hl1 "Help and Info" address:"https://https://omavel.in/all/ue-fbx-exporter/" align:#center color:(color 100 180 255) visitedColor:(color 100 180 255)
+		hyperlink hl3 "Original Site (Web Archive)" address:"https://web.archive.org/web/20220527144947/http://www.tomshannon3d.com/2014/07/tstools-first-release-ue4-mass-fbx.html" align:#center color:(color 100 180 255) visitedColor:(color 100 180 255)
+
 		local doGridTransform = false
 		local exportObjects = #()
 		local selnames = #()
